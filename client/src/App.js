@@ -32,7 +32,7 @@ function TruckForm() {
   // }
 
   function handleSubmit() {
-    console.log("hellloooo!")
+
 
     const formData = {
       truckName: truckName,
@@ -54,6 +54,12 @@ function TruckForm() {
 
     })
     
+    setTruckName("");
+    setType("");
+    setHours("");
+    setLot("");
+    setAddress("");
+
   }
 
   return (
@@ -198,18 +204,25 @@ function App() {
   const [data, setData] = React.useState(null);
 
   React.useEffect(() => {
-    fetch("/api")
+    fetch("http://localhost:3000/trucks")
       .then((res) => res.json())
-      .then((data) => setData(data.message));
+      .then((data) => {
+        setData(data);
+        console.log(data);
+      })
+      // .then((data) => setData(data.message));
   }, []);
+
+  console.log("CCCCCCC")
+  console.log(data);
 
   return (
     <div className="App">
-      <p>
+      {/* <p>
         {!data ? "Loading..." : data}
-      </p>
+      </p> */}
       <TruckForm />
-      <LotTable trucks={TRUCKS} />
+      {data ? <LotTable trucks={data} /> : 'Loading...'}
       {/* <MyComponent /> */}
     </div>
   );
