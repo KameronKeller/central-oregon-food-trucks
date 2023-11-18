@@ -20,16 +20,16 @@ const TRUCKS = [
 ];
 
 function TruckForm() {
-  // const [isVisibile, setIsVisible] = useState(false);
+  const [isVisibile, setIsVisible] = useState(false);
   const [truckName, setTruckName] = useState("");
   const [type, setType] = useState("");
   const [hours, setHours] = useState("");
   const [lot, setLot] = useState("");
   const [address, setAddress] = useState("");
 
-  // function toggle() {
-  //   setIsVisible(!isVisibile);
-  // }
+  function toggle() {
+    setIsVisible(!isVisibile);
+  }
 
   function handleSubmit() {
 
@@ -64,10 +64,10 @@ function TruckForm() {
 
   return (
       <div>
-        {/* <button onClick={toggle}>
+        <button onClick={toggle}>
           {isVisibile ? 'Hide Form' : 'Show Form'}
-        </button> */}
-        {/* {isVisibile && ( */}
+        </button>
+        {isVisibile && (
           <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
             <label>Truck Name:
               <input
@@ -106,7 +106,7 @@ function TruckForm() {
             </label><br />
             <input type="submit" />
           </form>
-        {/* )} */}
+        )}
       </div>
   );
 }
