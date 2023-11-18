@@ -20,37 +20,87 @@ const TRUCKS = [
 ];
 
 function TruckForm() {
-  const [isVisibile, setIsVisible] = useState(false);
+  // const [isVisibile, setIsVisible] = useState(false);
+  const [truckName, setTruckName] = useState("");
+  const [type, setType] = useState("");
+  const [hours, setHours] = useState("");
+  const [lot, setLot] = useState("");
+  const [address, setAddress] = useState("");
 
-  function toggle() {
-    setIsVisible(!isVisibile);
+  // function toggle() {
+  //   setIsVisible(!isVisibile);
+  // }
+
+  function handleSubmit() {
+    console.log("hellloooo!")
+
+    const formData = {
+      truckName: truckName,
+      type: type,
+      hours: hours,
+      lot: lot,
+      address: address
+    }
+    
+    // Send data to the backend via POST
+    fetch('http://localhost:3000/posttest', {  // Enter your IP address here
+
+      method: 'POST', 
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData) // body data type must match "Content-Type" header
+
+    })
+    
   }
 
   return (
       <div>
-        <button onClick={toggle}>
+        {/* <button onClick={toggle}>
           {isVisibile ? 'Hide Form' : 'Show Form'}
-        </button>
-        {isVisibile && (
-          <form>
+        </button> */}
+        {/* {isVisibile && ( */}
+          <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
             <label>Truck Name:
-              <input type="text" />
+              <input
+              type="text"
+              value={truckName}
+              onChange={(e) => setTruckName(e.target.value)}
+              />
             </label><br />
             <label>Type:
-              <input type="text" />
+              <input
+              type="text"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              />
             </label><br />
             <label>Hours:
-              <input type="text" />
+              <input
+              type="text"
+              value={hours}
+              onChange={(e) => setHours(e.target.value)}
+              />
             </label><br />
             <label>Lot:
-              <input type="text" />
+              <input
+              type="text"
+              value={lot}
+              onChange={(e) => setLot(e.target.value)}
+              />
             </label><br />
             <label>Address:
-              <input type="text" />
+              <input
+              type="text"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              />
             </label><br />
             <input type="submit" />
           </form>
-        )}
+        {/* )} */}
       </div>
   );
 }
@@ -106,6 +156,44 @@ function MyButton() {
   );
 }
 
+// function MyComponent() {
+
+//   var jsonData = {"truckName":"John", "type":"Thai", "hours":"1-5", "lot":"theLot"}
+
+//   var nada = "nada thing";
+
+//   function handleClick() {
+    
+//     // Send data to the backend via POST
+//     fetch('http://localhost:3000/posttest', {  // Enter your IP address here
+
+//       method: 'POST', 
+//       mode: 'cors',
+//       // body: nada,
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
+
+//     })
+    
+//   }
+
+//   return (
+//     <div onClick={handleClick} style={{
+//       textAlign: 'center',
+//       width: '100px',
+//       border: '1px solid gray',
+//       borderRadius: '5px'
+//     }}>
+//       Send data to backend
+//     </div>
+//   );
+
+// }
+
+// export { MyComponent };
+
 function App() {
   const [data, setData] = React.useState(null);
 
@@ -122,6 +210,7 @@ function App() {
       </p>
       <TruckForm />
       <LotTable trucks={TRUCKS} />
+      {/* <MyComponent /> */}
     </div>
   );
 }
