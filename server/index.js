@@ -1,5 +1,6 @@
 import express from "express";
-import { createTable, dbPut } from "./db/dbCreate.js";
+import { createTable, dbPut, dbScan } from "./db/dbCreate.js";
+import { QueryCommand } from "@aws-sdk/lib-dynamodb";
 
 const PORT = process.env.PORT || 3001;
 
@@ -10,8 +11,22 @@ const app = express();
 
 // app.use(express.json());
 
-app.get("/api", (req, res) => {
-    res.json({ message: "Hello from the server!" });
+app.get("/trucks", async (req, res) => {
+    console.log("request made");
+    const params = ({
+        TableName: "foodTrucks"
+      });
+
+    try {
+        let data = await dbScan(params);
+        console.log(data);
+        // const jsonData = JSON.stringify(data, null, 2);
+        // console.log(JSON.stringify(data, null, 2));
+        res.json(data);
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
 });
 
 app.post("/posttest", express.json(), (req, res) => {
@@ -24,7 +39,8 @@ app.post("/posttest", express.json(), (req, res) => {
             "sk": "t1",
             "truckName": req.body.truckName,
             "type": req.body.type,
-            "hours": req.body.hours
+            "hours": req.body.hours,
+            "address": req.body.address
         }
     };
 
