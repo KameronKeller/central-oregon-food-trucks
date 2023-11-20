@@ -1,0 +1,16 @@
+[
+    {
+        name: "Rico Taco",
+        type: "Mexican",
+        Hours: "Sunday to Sunday, 10am to 8pm",
+        Lot: "The Food Lot",
+        Address: "123 abcd st."
+    },
+    {
+        name: "Thai Plates",
+        type: "Thai",
+        Hours: "Sunday to Sunday, 10am to 8pm",
+        Lot: "The Food Lot",
+        Address: "123 abcd st."
+    }
+]
