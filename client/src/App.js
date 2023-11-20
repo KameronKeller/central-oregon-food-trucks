@@ -1,26 +1,27 @@
 import React, { useState } from "react";
-import logo from './logo.svg';
 import './App.css';
 
-const TRUCKS = [
-  {
-      name: "Rico Taco",
-      type: "Mexican",
-      hours: "Sunday to Sunday, 10am to 8pm",
-      lot: "The Food Lot",
-      address: "123 abcd st."
-  },
-  {
-      name: "Thai Plates",
-      type: "Thai",
-      hours: "Sunday to Sunday, 10am to 8pm",
-      lot: "The Food Lot",
-      address: "123 abcd st."
-  }
-];
+// const TRUCKS = [
+//   {
+//       name: "Rico Taco",
+//       type: "Mexican",
+//       hours: "Sunday to Sunday, 10am to 8pm",
+//       lot: "The Food Lot",
+//       address: "123 abcd st."
+//   },
+//   {
+//       name: "Thai Plates",
+//       type: "Thai",
+//       hours: "Sunday to Sunday, 10am to 8pm",
+//       lot: "The Food Lot",
+//       address: "123 abcd st."
+//   }
+// ];
 
 function TruckForm() {
-  const [isVisibile, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [error, setError] = useState(null);
+
   const [truckName, setTruckName] = useState("");
   const [type, setType] = useState("");
   const [hours, setHours] = useState("");
@@ -28,11 +29,15 @@ function TruckForm() {
   const [address, setAddress] = useState("");
 
   function toggle() {
-    setIsVisible(!isVisibile);
+    setIsVisible(!isVisible);
   }
 
   function handleSubmit() {
 
+    if (!truckName || !type || !hours || !lot || !address) {
+      setError('All fields are required');
+      return;
+    }
 
     const formData = {
       truckName: truckName,
@@ -43,7 +48,7 @@ function TruckForm() {
     }
     
     // Send data to the backend via POST
-    fetch('http://localhost:3000/posttest', {  // Enter your IP address here
+    fetch('http://192.168.0.11:3000/posttest', {  // Enter your IP address here
 
       method: 'POST', 
       mode: 'cors',
@@ -65,9 +70,10 @@ function TruckForm() {
   return (
       <div>
         <button onClick={toggle}>
-          {isVisibile ? 'Hide Form' : 'Show Form'}
+          Add Food Truck
+          {/* {isVisible ? 'Hide Form' : 'Show Form'} */}
         </button>
-        {isVisibile && (
+        {isVisible && (
           <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
             <label>Truck Name:
               <input
@@ -104,7 +110,10 @@ function TruckForm() {
               onChange={(e) => setAddress(e.target.value)}
               />
             </label><br />
-            <input type="submit" />
+            {error && <p>{error}</p>}
+            <div className="submit-button-container">
+              <input type="submit" value="Submit"/>
+            </div>
           </form>
         )}
       </div>
@@ -150,61 +159,11 @@ function LotTable({ trucks }) {
     );
 }
 
-function MyButton() {
-  function handleClick() {
-    alert('You clicked me!');
-  }
-
-  return (
-    <button onClick={handleClick}>
-      Add Truck
-    </button>
-  );
-}
-
-// function MyComponent() {
-
-//   var jsonData = {"truckName":"John", "type":"Thai", "hours":"1-5", "lot":"theLot"}
-
-//   var nada = "nada thing";
-
-//   function handleClick() {
-    
-//     // Send data to the backend via POST
-//     fetch('http://localhost:3000/posttest', {  // Enter your IP address here
-
-//       method: 'POST', 
-//       mode: 'cors',
-//       // body: nada,
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify(jsonData) // body data type must match "Content-Type" header
-
-//     })
-    
-//   }
-
-//   return (
-//     <div onClick={handleClick} style={{
-//       textAlign: 'center',
-//       width: '100px',
-//       border: '1px solid gray',
-//       borderRadius: '5px'
-//     }}>
-//       Send data to backend
-//     </div>
-//   );
-
-// }
-
-// export { MyComponent };
-
 function App() {
   const [data, setData] = React.useState(null);
 
   React.useEffect(() => {
-    fetch("http://localhost:3000/trucks")
+    fetch("http://192.168.0.11:3000/trucks")
       .then((res) => res.json())
       .then((data) => {
         setData(data);
@@ -213,16 +172,15 @@ function App() {
       // .then((data) => setData(data.message));
   }, []);
 
-  console.log("CCCCCCC")
-  console.log(data);
 
   return (
     <div className="App">
+      <h1>Central Oregon Food Trucks</h1>
       {/* <p>
         {!data ? "Loading..." : data}
       </p> */}
-      <TruckForm />
       {data ? <LotTable trucks={data} /> : 'Loading...'}
+      <TruckForm />
       {/* <MyComponent /> */}
     </div>
   );
