@@ -36,7 +36,7 @@ app.post("/posttest", express.json(), (req, res) => {
         TableName: "foodTrucks",
         Item: {
             "pk": req.body.lot,
-            "sk": "t1",
+            "sk": req.body.truckName,
             "truckName": req.body.truckName,
             "type": req.body.type,
             "hours": req.body.hours,
