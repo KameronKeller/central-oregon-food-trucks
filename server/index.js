@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { createTable, dbPut, dbScan } from "./db/dbCreate.js";
 import { QueryCommand } from "@aws-sdk/lib-dynamodb";
 
@@ -8,6 +9,7 @@ const PORT = process.env.PORT || 3001;
 createTable();
 
 const app = express();
+app.use(cors());
 
 // app.use(express.json());
 
