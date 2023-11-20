@@ -48,7 +48,7 @@ function TruckForm() {
     }
     
     // Send data to the backend via POST
-    fetch('http://localhost:3001/posttest', {  // Enter your IP address here
+    fetch('http://54.185.54.214/posttest', {  // Enter your IP address here
 
       method: 'POST', 
       mode: 'cors',
@@ -163,7 +163,7 @@ function App() {
   const [data, setData] = React.useState(null);
 
   React.useEffect(() => {
-    fetch("http://localhost:3001/trucks",)
+    fetch("http://54.185.54.214/trucks",)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
