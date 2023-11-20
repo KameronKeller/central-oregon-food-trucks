@@ -1,5 +1,15 @@
-.App {
+h1 {
   text-align: center;
+}
+
+.App {
+  /* text-align: center; */
+  display: flex;
+  flex-direction: column;
+}
+
+.submit-button-container {
+  text-align: right;
 }
 
 .App-logo {
