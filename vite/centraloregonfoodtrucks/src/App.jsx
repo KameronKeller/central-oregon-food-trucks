@@ -76,7 +76,7 @@ function TruckForm() {
     }
     
     // Send data to the backend via POST
-    fetch('http://54.185.54.214/posttest', {  // Enter your IP address here
+    fetch('http://localhost:3001/posttest', {  // Enter your IP address here
 
       method: 'POST', 
       mode: 'cors',
@@ -90,6 +90,7 @@ function TruckForm() {
     setTruckName("");
     setType("");
     setLot("");
+    setNewLot("");
     setAddress("");
 
   }
@@ -124,6 +125,8 @@ function TruckForm() {
                 }
                 }  
               >
+                {foodLots}
+                <option value="Add New">+ Add New Lot</option>
               </select>
             </label><br />
             {isAddNew === true &&
@@ -196,10 +199,10 @@ function LotTable({ trucks }) {
 }
 
 function App() {
-  const [data, setData] = React.useState(null);
+  const [data, setData] = useState(null);
 
   React.useEffect(() => {
-    fetch("http://54.185.54.214/trucks",)
+    fetch("http://localhost:3001/trucks",)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
