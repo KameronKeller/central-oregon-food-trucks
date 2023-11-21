@@ -13,11 +13,40 @@ function TruckForm() {
   const [error, setError] = useState(null);
   const [isAddNew, setIsAddNew] = useState(null);
 
+  const [existingLots, setExistingLots] = useState([]);
+
   const [truckName, setTruckName] = useState("");
   const [type, setType] = useState("");
   const [lot, setLot] = useState("");
   const [newLot, setNewLot] = useState("");
   const [address, setAddress] = useState("");
+
+  React.useEffect(() => {
+    fetch("http://localhost:3001/existinglots",)
+      .then((res) => res.json())
+      .then((existingLots) => {
+        setExistingLots(existingLots);
+      })
+  }, []);
+
+  const foodLots = [];
+
+  
+  existingLots.forEach((lotName) => {
+    foodLots.push(
+      <LotOption
+        option={lotName}
+        key={lotName} />
+      )}
+);
+
+  React.useEffect(() => {
+    if (existingLots.length === 0) {
+      setIsAddNew(true);
+    } else {
+      setIsAddNew(false);
+    }
+  }, [existingLots]);
 
   function toggle() {
     setIsVisible(!isVisible);
@@ -25,17 +54,19 @@ function TruckForm() {
 
   function handleSubmit() {
 
-    if (!truckName || !type || !lot || !address) {
-      setError('All fields are required');
-      return;
-    }
-
     let selectedLot = "";
     if (isAddNew) {
       selectedLot = newLot;
     } else {
       selectedLot = lot;
     }
+
+    if (!truckName || !type || !selectedLot || !address) {
+      setError('All fields are required');
+      return;
+    }
+
+
 
     const formData = {
       truckName: truckName,
