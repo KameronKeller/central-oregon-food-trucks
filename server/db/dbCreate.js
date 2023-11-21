@@ -1,7 +1,7 @@
 import { DynamoDB, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
 
-var dynamodb = new DynamoDB({ region: 'us-east-2' });
+var dynamodb = new DynamoDB({ region: 'local', endpoint:"http://localhost:8000/"});
 var docClient = DynamoDBDocumentClient.from(dynamodb);
 
 var params = {
@@ -79,7 +79,7 @@ export async function dbScan(params) {
         return data.Items.map(item => ({
             name: item.truckName.S,
             type: item.type.S,
-            lot: item.sk.S,
+            lot: item.pk.S,
             address: item.address.S
         }));
         } catch (error) {
