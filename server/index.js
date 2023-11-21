@@ -34,9 +34,9 @@ app.get("/existinglots", async (req, res) => {
 
     const params = ({
         TableName: "foodTrucks",
-        ProjectionExpression: "#sk",
+        ProjectionExpression: "#pk",
         ExpressionAttributeNames: {
-            "#sk": "sk"
+            "#pk": "pk"
         }
       });
 
