@@ -21,10 +21,12 @@ import './App.css';
 function TruckForm() {
   const [isVisible, setIsVisible] = useState(false);
   const [error, setError] = useState(null);
+  const [isAddNew, setIsAddNew] = useState(null);
 
   const [truckName, setTruckName] = useState("");
   const [type, setType] = useState("");
   const [lot, setLot] = useState("");
+  const [newLot, setNewLot] = useState("");
   const [address, setAddress] = useState("");
 
   function toggle() {
@@ -38,10 +40,17 @@ function TruckForm() {
       return;
     }
 
+    let selectedLot = "";
+    if (isAddNew) {
+      selectedLot = newLot;
+    } else {
+      selectedLot = lot;
+    }
+
     const formData = {
       truckName: truckName,
       type: type,
-      lot: lot,
+      lot: selectedLot,
       address: address
     }
     
@@ -87,19 +96,36 @@ function TruckForm() {
               />
             </label><br />
             <label>Lot:
-              <input
-              type="text"
-              value={lot}
-              onChange={(e) => setLot(e.target.value)}
-              />
+              <select
+                onChange={(e) => {
+                  setLot(e.target.value);
+                  setIsAddNew(true);
+                }
+                }  
+              >
+                <option value="2"></option>
+                <option value="3"></option>
+                <option value="Add New">Add New</option>
+              </select>
             </label><br />
-            <label>Address:
+            {isAddNew === true &&
+            <label>New Lot Name:
+              <input
+                type="text"
+                value={newLot}
+                onChange={(e) => setNewLot(e.target.value)}
+              />
+            </label>
+            }
+            <br />
+            {isAddNew === true &&
+            (<label>Address:
               <input
               type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               />
-            </label><br />
+            </label>)}
             {error && <p>{error}</p>}
             <div className="submit-button-container">
               <input type="submit" value="Submit"/>
