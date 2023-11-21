@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import './App.css';
 
+function LotOption({ option }) {
+
+  return (
+    <option value={option}>{option}</option>
+  );
+}
 
 function TruckForm() {
   const [isVisible, setIsVisible] = useState(false);
