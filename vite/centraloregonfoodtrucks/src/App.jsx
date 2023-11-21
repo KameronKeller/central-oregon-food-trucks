@@ -24,7 +24,6 @@ function TruckForm() {
 
   const [truckName, setTruckName] = useState("");
   const [type, setType] = useState("");
-  const [hours, setHours] = useState("");
   const [lot, setLot] = useState("");
   const [address, setAddress] = useState("");
 
@@ -34,7 +33,7 @@ function TruckForm() {
 
   function handleSubmit() {
 
-    if (!truckName || !type || !hours || !lot || !address) {
+    if (!truckName || !type || !lot || !address) {
       setError('All fields are required');
       return;
     }
@@ -42,7 +41,6 @@ function TruckForm() {
     const formData = {
       truckName: truckName,
       type: type,
-      hours: hours,
       lot: lot,
       address: address
     }
@@ -61,7 +59,6 @@ function TruckForm() {
     
     setTruckName("");
     setType("");
-    setHours("");
     setLot("");
     setAddress("");
 
@@ -87,13 +84,6 @@ function TruckForm() {
               type="text"
               value={type}
               onChange={(e) => setType(e.target.value)}
-              />
-            </label><br />
-            <label>Hours:
-              <input
-              type="text"
-              value={hours}
-              onChange={(e) => setHours(e.target.value)}
               />
             </label><br />
             <label>Lot:
@@ -149,7 +139,6 @@ function LotTable({ trucks }) {
           <tr>
             <th>Truck Name</th>
             <th>Type</th>
-            <th>Hours</th>
             <th>Lot</th>
             <th>Address</th>
           </tr>

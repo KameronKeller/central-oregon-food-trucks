@@ -58,7 +58,6 @@ export async function dbScan(params) {
         return data.Items.map(item => ({
             name: item.truckName.S,
             type: item.type.S,
-            hours: item.hours.S,
             lot: item.sk.S,
             address: item.address.S
         }));
