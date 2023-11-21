@@ -11,12 +11,6 @@ createTable();
 const app = express();
 app.use(cors());
 
-// app.use(express.json());
-
-app.get("/test", (req, res) => {
-    
-});
-
 app.get("/trucks", async (req, res) => {
     console.log("request made");
     const params = ({
