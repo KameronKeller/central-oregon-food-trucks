@@ -55,7 +55,7 @@ export function dbPut(params) {
 function getUniqueLots(data) {
     const uniqueLots = new Set();
     for (const item of data.Items) {
-        uniqueLots.add(item.sk.S);
+        uniqueLots.add(item.pk.S);
     }
     return uniqueLots;
 }
