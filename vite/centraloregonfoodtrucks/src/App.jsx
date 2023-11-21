@@ -121,7 +121,9 @@ function TruckForm() {
               <select
                 onChange={(e) => {
                   setLot(e.target.value);
-                  setIsAddNew(true);
+                  if (e.target.value === "Add New") {
+                    setIsAddNew(true);
+                  }
                 }
                 }  
               >
