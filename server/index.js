@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { createTable, dbPut, dbScan } from "./db/dbCreate.js";
+import { createTable, dbPut, dbScan, dbGetLots } from "./db/dbCreate.js";
 import { QueryCommand } from "@aws-sdk/lib-dynamodb";
 
 const PORT = process.env.PORT || 3001;
@@ -28,6 +28,25 @@ app.get("/trucks", async (req, res) => {
         console.error('Error:', error);
     }
 });
+
+app.get("/existinglots", async (req, res) => {
+    console.log("requesting existing lots");
+
+    const params = ({
+        TableName: "foodTrucks",
+        ProjectionExpression: "#sk",
+        ExpressionAttributeNames: {
+            "#sk": "sk"
+        }
+      });
+
+    try {
+        let data = await dbGetLots(params);
+        res.json(data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+})
 
 app.post("/posttest", express.json(), (req, res) => {
     console.log(req.body);
