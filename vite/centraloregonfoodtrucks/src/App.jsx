@@ -111,13 +111,16 @@ function TruckForm() {
 }
 
 function TruckRow({ truck }) {
+  let mapsQuery = "https://www.google.com/maps/search/?api=1&query=";
+  let encodedAddress = encodeURI(truck.address);
+  let addressLink = mapsQuery + encodedAddress;
+
   return (
     <tr>
       <td>{truck.name}</td>
       <td>{truck.type}</td>
-      <td>{truck.hours}</td>
       <td>{truck.lot}</td>
-      <td>{truck.address}</td>
+      <td><a href={addressLink}>{truck.address}</a></td>
     </tr>
   );
 }
