@@ -1,22 +1,6 @@
 import React, { useState } from "react";
 import './App.css';
 
-// const TRUCKS = [
-//   {
-//       name: "Rico Taco",
-//       type: "Mexican",
-//       hours: "Sunday to Sunday, 10am to 8pm",
-//       lot: "The Food Lot",
-//       address: "123 abcd st."
-//   },
-//   {
-//       name: "Thai Plates",
-//       type: "Thai",
-//       hours: "Sunday to Sunday, 10am to 8pm",
-//       lot: "The Food Lot",
-//       address: "123 abcd st."
-//   }
-// ];
 
 function TruckForm() {
   const [isVisible, setIsVisible] = useState(false);
@@ -103,9 +87,6 @@ function TruckForm() {
                 }
                 }  
               >
-                <option value="2"></option>
-                <option value="3"></option>
-                <option value="Add New">Add New</option>
               </select>
             </label><br />
             {isAddNew === true &&
@@ -187,7 +168,6 @@ function App() {
         setData(data);
         console.log(data);
       })
-      // .then((data) => setData(data.message));
   }, []);
 
 
