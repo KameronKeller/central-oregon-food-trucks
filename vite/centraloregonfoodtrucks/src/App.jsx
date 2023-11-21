@@ -22,7 +22,7 @@ function TruckForm() {
   const [address, setAddress] = useState("");
 
   React.useEffect(() => {
-    fetch("http://localhost:3001/existinglots",)
+    fetch("http://54.185.54.214/existinglots",)
       .then((res) => res.json())
       .then((existingLots) => {
         setExistingLots(existingLots);
@@ -76,7 +76,7 @@ function TruckForm() {
     }
     
     // Send data to the backend via POST
-    fetch('http://localhost:3001/posttest', {  // Enter your IP address here
+    fetch('http://54.185.54.214/posttest', {  // Enter your IP address here
 
       method: 'POST', 
       mode: 'cors',
@@ -123,6 +123,8 @@ function TruckForm() {
                   setLot(e.target.value);
                   if (e.target.value === "Add New") {
                     setIsAddNew(true);
+                  } else {
+                    setIsAddNew(false);
                   }
                 }
                 }  
@@ -204,7 +206,7 @@ function App() {
   const [data, setData] = useState(null);
 
   React.useEffect(() => {
-    fetch("http://localhost:3001/trucks",)
+    fetch("http://54.185.54.214/trucks",)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
