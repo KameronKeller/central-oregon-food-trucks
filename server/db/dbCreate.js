@@ -52,6 +52,27 @@ export function dbPut(params) {
 //       });
 // }
 
+function getUniqueLots(data) {
+    const uniqueLots = new Set();
+    for (const item of data.Items) {
+        uniqueLots.add(item.sk.S);
+    }
+    return uniqueLots;
+}
+
+export async function dbGetLots(params) {
+    const data = await docClient.send(new ScanCommand(params));
+    const uniqueLots = getUniqueLots(data);
+
+    try {
+        return Array.from(uniqueLots);
+        } catch (error) {
+            console.error('Error retrieving items:', error);
+        throw error;
+    }
+
+}
+
 export async function dbScan(params) {
     const data = await docClient.send(new ScanCommand(params));
     try {
@@ -64,5 +85,5 @@ export async function dbScan(params) {
         } catch (error) {
         console.error('Error retrieving items:', error);
         throw error;
-        }
+    }
 }
