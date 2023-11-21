@@ -49,7 +49,7 @@ app.get("/existinglots", async (req, res) => {
 })
 
 app.post("/posttest", express.json(), (req, res) => {
-    console.log(req.body);
+    console.log("posttest", req);
 
     const params = {
         TableName: "foodTrucks",
@@ -58,7 +58,6 @@ app.post("/posttest", express.json(), (req, res) => {
             "sk": req.body.truckName,
             "truckName": req.body.truckName,
             "type": req.body.type,
-            "hours": req.body.hours,
             "address": req.body.address
         }
     };
