@@ -31,14 +31,15 @@ function TruckForm() {
 
   const foodLots = [];
 
-  
+
   existingLots.forEach((lotName) => {
     foodLots.push(
       <LotOption
         option={lotName}
         key={lotName} />
-      )}
-);
+    )
+  }
+  );
 
   React.useEffect(() => {
     if (existingLots.length === 0) {
@@ -74,11 +75,11 @@ function TruckForm() {
       lot: selectedLot,
       address: address
     }
-    
+
     // Send data to the backend via POST
     fetch('http://54.185.54.214/posttest', {  // Enter your IP address here
 
-      method: 'POST', 
+      method: 'POST',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
@@ -86,7 +87,7 @@ function TruckForm() {
       body: JSON.stringify(formData) // body data type must match "Content-Type" header
 
     })
-    
+
     setTruckName("");
     setType("");
     setLot("");
@@ -96,44 +97,44 @@ function TruckForm() {
   }
 
   return (
-      <div>
-        <button onClick={toggle}>
-          Add Food Truck
-          {/* {isVisible ? 'Hide Form' : 'Show Form'} */}
-        </button>
-        {isVisible && (
-          <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-            <label>Truck Name:
-              <input
+    <div>
+      <button onClick={toggle}>
+        Add Food Truck
+        {/* {isVisible ? 'Hide Form' : 'Show Form'} */}
+      </button>
+      {isVisible && (
+        <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+          <label>Truck Name:
+            <input
               type="text"
               value={truckName}
               onChange={(e) => setTruckName(e.target.value)}
-              />
-            </label><br />
-            <label>Type:
-              <input
+            />
+          </label><br />
+          <label>Type:
+            <input
               type="text"
               value={type}
               onChange={(e) => setType(e.target.value)}
-              />
-            </label><br />
-            <label>Lot:
-              <select
-                onChange={(e) => {
-                  setLot(e.target.value);
-                  if (e.target.value === "Add New") {
-                    setIsAddNew(true);
-                  } else {
-                    setIsAddNew(false);
-                  }
+            />
+          </label><br />
+          <label>Lot:
+            <select
+              onChange={(e) => {
+                setLot(e.target.value);
+                if (e.target.value === "Add New") {
+                  setIsAddNew(true);
+                } else {
+                  setIsAddNew(false);
                 }
-                }  
-              >
-                {foodLots}
-                <option value="Add New">+ Add New Lot</option>
-              </select>
-            </label><br />
-            {isAddNew === true &&
+              }
+              }
+            >
+              {foodLots}
+              <option value="Add New">+ Add New Lot</option>
+            </select>
+          </label><br />
+          {isAddNew === true &&
             <label>New Lot Name:
               <input
                 type="text"
@@ -141,23 +142,23 @@ function TruckForm() {
                 onChange={(e) => setNewLot(e.target.value)}
               />
             </label>
-            }
-            <br />
-            {isAddNew === true &&
+          }
+          <br />
+          {isAddNew === true &&
             (<label>Address:
               <input
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
               />
             </label>)}
-            {error && <p>{error}</p>}
-            <div className="submit-button-container">
-              <input type="submit" value="Submit"/>
-            </div>
-          </form>
-        )}
-      </div>
+          {error && <p>{error}</p>}
+          <div className="submit-button-container">
+            <input type="submit" value="Submit" />
+          </div>
+        </form>
+      )}
+    </div>
   );
 }
 
@@ -184,22 +185,23 @@ function LotTable({ trucks }) {
       <TruckRow
         truck={truck}
         key={truck.name} />
-      )}
+    )
+  }
   );
 
-    return (
-      <table>
-        <thead>
-          <tr>
-            <th>Truck Name</th>
-            <th>Type</th>
-            <th>Lot</th>
-            <th>Address</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </table>
-    );
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Truck Name</th>
+          <th>Type</th>
+          <th>Lot</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>{rows}</tbody>
+    </table>
+  );
 }
 
 function App() {
