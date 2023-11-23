@@ -5,10 +5,10 @@ var dynamodb = new DynamoDB({ region: 'local' });
 var docClient = DynamoDBDocumentClient.from(dynamodb);
 
 var params = {
-    TableName : "foodTrucks",
+    TableName: "foodTrucks",
     KeySchema: [
-        { AttributeName: "pk", KeyType: "HASH"},  //Partition key
-        { AttributeName: "sk", KeyType: "RANGE"}
+        { AttributeName: "pk", KeyType: "HASH" },  //Partition key
+        { AttributeName: "sk", KeyType: "RANGE" }
     ],
     AttributeDefinitions: [
         { AttributeName: "pk", AttributeType: "S" },
@@ -21,7 +21,7 @@ var params = {
 };
 
 export function createTable() {
-    dynamodb.createTable(params, function(err, data) {
+    dynamodb.createTable(params, function (err, data) {
         if (err) {
             console.error("Error JSON.", JSON.stringify(err, null, 2));
         } else {
@@ -33,24 +33,6 @@ export function createTable() {
 export function dbPut(params) {
     docClient.send(new PutCommand(params));
 }
-
-// export function dbScan(params) {
-//     dynamodb.scan(params, function (err, data) {
-//         if (err) {
-//           console.log("Error", err);
-//         } else {
-//           console.log("Success", data);
-//           const jsonString = JSON.stringify(data);
-//           console.log(jsonString);
-//         //   data.Items.forEach(function (element, index, array) {
-//         //     console.log(
-//         //         "printing",
-//         //         element.sk.S
-//         //     );
-//         //   });
-//         }
-//       });
-// }
 
 function getUniqueLots(data) {
     const uniqueLots = new Set();
@@ -66,8 +48,8 @@ export async function dbGetLots(params) {
 
     try {
         return Array.from(uniqueLots);
-        } catch (error) {
-            console.error('Error retrieving items:', error);
+    } catch (error) {
+        console.error('Error retrieving items:', error);
         throw error;
     }
 
@@ -82,7 +64,7 @@ export async function dbScan(params) {
             lot: item.pk.S,
             address: item.address.S
         }));
-        } catch (error) {
+    } catch (error) {
         console.error('Error retrieving items:', error);
         throw error;
     }
