@@ -31,15 +31,21 @@ function TruckForm() {
 
   const foodLots = [];
 
-
-  existingLots.forEach((lotName) => {
-    foodLots.push(
-      <LotOption
-        option={lotName}
-        key={lotName} />
-    )
+  for (let lotName in existingLots) {
+    if (existingLots.hasOwnProperty(lotName)) {
+      foodLots.push(
+        <LotOption
+          option={lotName}
+          key={lotName} />
+      );
+    }
   }
-  );
+
+  React.useEffect(() => {
+    if (!isAddNew && lot !== "select") {
+      setAddress(existingLots[lot]);
+    }
+  }, [lot]);
 
   React.useEffect(() => {
     if (existingLots.length === 0) {
@@ -123,15 +129,17 @@ function TruckForm() {
               onChange={(e) => {
                 setLot(e.target.value);
                 if (e.target.value === "Add New") {
+                  setAddress("");
                   setIsAddNew(true);
                 } else {
                   setIsAddNew(false);
                 }
               }
-              }
+            }
             >
-              {foodLots}
+              <option value="select">Select...</option>
               <option value="Add New">+ Add New Lot</option>
+              {foodLots}
             </select>
           </label><br />
           {isAddNew === true &&
@@ -212,7 +220,6 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         setData(data);
-        console.log(data);
       })
   }, []);
 

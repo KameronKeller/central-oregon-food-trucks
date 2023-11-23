@@ -35,9 +35,11 @@ export function dbPut(params) {
 }
 
 function getUniqueLots(data) {
-    const uniqueLots = new Set();
+    const uniqueLots = {};
     for (const item of data.Items) {
-        uniqueLots.add(item.pk.S);
+        if (!uniqueLots.hasOwnProperty(item.pk.S)) {
+            uniqueLots[item.pk.S] = item.address.S;
+        }
     }
     return uniqueLots;
 }
@@ -47,7 +49,7 @@ export async function dbGetLots(params) {
     const uniqueLots = getUniqueLots(data);
 
     try {
-        return Array.from(uniqueLots);
+        return uniqueLots;
     } catch (error) {
         console.error('Error retrieving items:', error);
         throw error;
