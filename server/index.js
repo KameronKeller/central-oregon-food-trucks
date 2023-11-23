@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { createTable, dbPut, dbScan, dbGetLots } from "./db/dbCreate.js";
+import { createTable, dbPut, dbScan, dbGetLots } from "./db/dbFunctions.js";
 import { QueryCommand } from "@aws-sdk/lib-dynamodb";
 
 const PORT = process.env.PORT || 3001;
