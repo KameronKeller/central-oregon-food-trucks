@@ -83,7 +83,7 @@ function TruckForm() {
     }
 
     // Send data to the backend via POST
-    fetch('http://54.185.54.214/posttest', {  // Enter your IP address here
+    fetch('http://54.185.54.214/savetruck', {  // Enter your IP address here
 
       method: 'POST',
       mode: 'cors',
