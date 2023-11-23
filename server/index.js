@@ -19,9 +19,6 @@ app.get("/trucks", async (req, res) => {
 
     try {
         let data = await dbScan(params);
-        console.log(data);
-        // const jsonData = JSON.stringify(data, null, 2);
-        // console.log(JSON.stringify(data, null, 2));
         res.json(data);
 
     } catch (error) {
@@ -34,9 +31,10 @@ app.get("/existinglots", async (req, res) => {
 
     const params = ({
         TableName: "foodTrucks",
-        ProjectionExpression: "#pk",
+        ProjectionExpression: "#pk, #address",
         ExpressionAttributeNames: {
-            "#pk": "pk"
+            "#pk": "pk",
+            "#address": "address"
         }
       });
 
