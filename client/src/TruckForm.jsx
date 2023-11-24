@@ -20,13 +20,17 @@ export function TruckForm() {
   const [address, setAddress] = useState("");
 
   React.useEffect(() => {
-    fetch("http://localhost:3001/existinglots")
-      .then((res) => res.json())
-      .then((existingLots) => {
-        setExistingLots(existingLots);
-      });
+    async function fetchExistingLots() {
+      try {
+        const response = await fetch("http://localhost:3001/existinglots");
+        const lots = await response.json();
+        setExistingLots(lots);
+      } catch (error) {
+        console.error("Failed to fetch existing lots:", error);
+      }
+    }
+    fetchExistingLots();
   }, []);
-
   const foodLots = [];
 
   for (let lotName in existingLots) {
@@ -43,7 +47,8 @@ export function TruckForm() {
     if (!isAddNew && lot !== "select") {
       setAddress(existingLots[lot]);
     }
-  }, [lot]);
+  }, [isAddNew, lot]);
+
 
   React.useEffect(() => {
     if (existingLots.length === 0) {
