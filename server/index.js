@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import { createTable, dbPut, dbScan, dbGetLots } from "./db/dbFunctions.js";
-import { QueryCommand } from "@aws-sdk/lib-dynamodb";
 
 const PORT = process.env.PORT || 3001;
 
@@ -46,8 +45,7 @@ app.get("/existinglots", async (req, res) => {
     }
 })
 
-app.post("/posttest", express.json(), (req, res) => {
-    console.log("posttest", req);
+app.post("/savetruck", express.json(), (req, res) => {
 
     const params = {
         TableName: "foodTrucks",
