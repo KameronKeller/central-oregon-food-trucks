@@ -7,7 +7,7 @@ function App() {
   const [data, setData] = useState(null);
 
   React.useEffect(() => {
-    fetch("http://localhost:3001/trucks",)
+    fetch("http://54.185.54.214/trucks",)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
