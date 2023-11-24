@@ -1,5 +1,3 @@
-import React from "react";
-
 export function TruckRow({ truck }) {
   let mapsQuery = "https://www.google.com/maps/search/?api=1&query=";
   let encodedAddress = encodeURI(truck.address);
