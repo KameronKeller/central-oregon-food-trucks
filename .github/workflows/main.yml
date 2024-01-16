@@ -22,7 +22,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
       - name: Switch to serverless branch
-        uses: git switch serverless
+        run: git switch serverless
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
