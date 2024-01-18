@@ -22,7 +22,7 @@ export function TruckForm() {
   React.useEffect(() => {
     async function fetchExistingLots() {
       try {
-        const response = await fetch("http://54.185.54.214/existinglots");
+        const response = await fetch(`http://${import.meta.env.VITE_API_URL}/existinglots`);
         const lots = await response.json();
         setExistingLots(lots);
       } catch (error) {
@@ -84,7 +84,7 @@ export function TruckForm() {
     };
 
     // Send data to the backend via POST
-    fetch('http://54.185.54.214/savetruck', {
+    fetch(`http://${import.meta.env.VITE_API_URL}/savetruck`, {
       method: 'POST',
       mode: 'cors',
       headers: {

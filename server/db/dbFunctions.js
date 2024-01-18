@@ -1,7 +1,7 @@
 import { DynamoDB, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
 
-var dynamodb = new DynamoDB({ region: 'us-east-2' });
+var dynamodb = new DynamoDB({ region: process.env.NODE_ENV === 'production' ? 'us-east-2' : 'local' });
 var docClient = DynamoDBDocumentClient.from(dynamodb);
 
 var params = {

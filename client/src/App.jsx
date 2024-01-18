@@ -7,7 +7,7 @@ function App() {
   const [data, setData] = useState(null);
 
   React.useEffect(() => {
-    fetch("http://54.185.54.214/trucks",)
+    fetch(`http://${import.meta.env.VITE_API_URL}/trucks`,)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
