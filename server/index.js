@@ -1,17 +1,16 @@
 import express from "express";
 import cors from "cors";
-import { createTable, dbPut, dbScan, dbGetLots } from "./db/dbFunctions.js";
+import { ensureTableExists, dbPut, dbScan, dbGetLots } from "./db/dbFunctions.js";
 
 const PORT = process.env.PORT || 3001;
 
 // Create the DynamoDB table
-createTable();
+ensureTableExists();
 
 const app = express();
 app.use(cors());
 
 app.get("/trucks", async (req, res) => {
-    console.log("request made");
     const params = ({
         TableName: "foodTrucks"
       });
@@ -26,7 +25,6 @@ app.get("/trucks", async (req, res) => {
 });
 
 app.get("/existinglots", async (req, res) => {
-    console.log("requesting existing lots");
 
     const params = ({
         TableName: "foodTrucks",

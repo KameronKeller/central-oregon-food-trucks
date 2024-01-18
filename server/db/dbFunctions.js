@@ -1,14 +1,14 @@
 import { DynamoDB, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
 
-var dynamodb = new DynamoDB({ region: process.env.NODE_ENV === 'production' ? 'us-east-2' : 'local' });
-var docClient = DynamoDBDocumentClient.from(dynamodb);
+let dynamodb = new DynamoDB({ region: process.env.NODE_ENV === 'production' ? 'us-east-2' : 'local' });
+let docClient = DynamoDBDocumentClient.from(dynamodb);
 
-var params = {
+let params = {
     TableName: "foodTrucks",
     KeySchema: [
-        { AttributeName: "pk", KeyType: "HASH" },  //Partition key
-        { AttributeName: "sk", KeyType: "RANGE" }
+        { AttributeName: "pk", KeyType: "HASH" },  //Partition key - Food truck lot
+        { AttributeName: "sk", KeyType: "RANGE" }  //Sort key - Food truck name
     ],
     AttributeDefinitions: [
         { AttributeName: "pk", AttributeType: "S" },
@@ -20,12 +20,23 @@ var params = {
     }
 };
 
-export function createTable() {
+function createTable(params) {
     dynamodb.createTable(params, function (err, data) {
         if (err) {
             console.error("Error JSON.", JSON.stringify(err, null, 2));
         } else {
             console.log("Created table.", JSON.stringify(data, null, 2));
+        }
+    });
+}
+
+export function ensureTableExists() {
+    dynamodb.describeTable({ TableName: params.TableName }, function (err, data) {
+        if (err && err.code === 'ResourceNotFoundException') {
+            // If the table isn't found, create it
+            createTable();
+        } else if (err) {
+            console.error("Unable to describe table. Error JSON:", JSON.stringify(err, null, 2));
         }
     });
 }

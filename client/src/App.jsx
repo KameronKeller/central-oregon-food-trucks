@@ -4,20 +4,20 @@ import { LotTable } from "./LotTable";
 import { TruckForm } from "./TruckForm";
 
 function App() {
-  const [data, setData] = useState(null);
+  const [truckData, setTruckData] = useState(null);
 
   React.useEffect(() => {
     fetch(`http://${import.meta.env.VITE_API_URL}/trucks`,)
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
+      .then((jsonString) => jsonString.json())
+      .then((jsonData) => {
+        setTruckData(jsonData);
       })
   }, []);
 
   return (
     <div className="App">
       <h1>Central Oregon Food Trucks</h1>
-      {data ? <LotTable trucks={data} /> : 'Loading...'}
+      {truckData ? <LotTable trucks={truckData} /> : 'Loading...'}
       <TruckForm />
     </div>
   );

@@ -6,6 +6,55 @@ function LotOption({ option }) {
     <option value={option}>{option}</option>
   );
 }
+
+function FormField({ label, value, setValue }) {
+
+  return (
+    <label>
+      {label}
+      <InputBox
+        type="text"
+        value={value}
+        setValue={setValue}
+      />
+    </label>
+  );
+}
+
+function InputBox({ type, value, setValue }) {
+
+  return (
+    <input
+      type={type}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+    />
+  );
+}
+
+function LotSelector({ label, setLot, setAddress, setIsAddNew, foodLots }) {
+
+  return (
+    <label>{label}
+      <select
+        onChange={(e) => {
+          setLot(e.target.value);
+          if (e.target.value === "Add New") {
+            setAddress("");
+            setIsAddNew(true);
+          } else {
+            setIsAddNew(false);
+          }
+        }}
+      >
+        <option value="select">Select...</option>
+        <option value="Add New">+ Add New Lot</option>
+        {foodLots}
+      </select>
+    </label>
+  );
+}
+
 export function TruckForm() {
   const [isVisible, setIsVisible] = useState(false);
   const [error, setError] = useState(null);
@@ -31,6 +80,7 @@ export function TruckForm() {
     }
     fetchExistingLots();
   }, []);
+  
   const foodLots = [];
 
   for (let lotName in existingLots) {
@@ -108,50 +158,15 @@ export function TruckForm() {
       </button>
       {isVisible && (
         <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-          <label>Truck Name:
-            <input
-              type="text"
-              value={truckName}
-              onChange={(e) => setTruckName(e.target.value)} />
-          </label><br />
-          <label>Type:
-            <input
-              type="text"
-              value={type}
-              onChange={(e) => setType(e.target.value)} />
-          </label><br />
-          <label>Lot:
-            <select
-              onChange={(e) => {
-                setLot(e.target.value);
-                if (e.target.value === "Add New") {
-                  setAddress("");
-                  setIsAddNew(true);
-                } else {
-                  setIsAddNew(false);
-                }
-              }}
-            >
-              <option value="select">Select...</option>
-              <option value="Add New">+ Add New Lot</option>
-              {foodLots}
-            </select>
-          </label><br />
+          <FormField label="Truck Name:" value={truckName} setValue={setTruckName} />
+          <FormField label="Type:" value={type} setValue={setType} />
+          <LotSelector label="Lot:" setLot={setLot} setAddress={setAddress} setIsAddNew={setIsAddNew} foodLots={foodLots} />
           {isAddNew === true &&
-            <label>New Lot Name:
-              <input
-                type="text"
-                value={newLot}
-                onChange={(e) => setNewLot(e.target.value)} />
-            </label>}
-          <br />
-          {isAddNew === true &&
-            (<label>Address:
-              <input
-                type="text"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)} />
-            </label>)}
+            <>
+              <FormField label="New Lot Name:" value={newLot} setValue={setNewLot} />
+              <FormField label="Address:" value={address} setValue={setAddress} />
+            </>
+          }
           {error && <p>{error}</p>}
           <div className="submit-button-container">
             <input type="submit" value="Submit" />
