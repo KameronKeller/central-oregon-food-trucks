@@ -1,7 +1,5 @@
 # Central Oregon Food Trucks
 
-Demo: https://foodcarts.s3.us-west-2.amazonaws.com/index.html
-
 Central Oregon has a growing number of food truck lots. Wouldn't it be great to have a one-stop shop for picking your next, delicous, food-truck meal? 
 
 ## Roadmap
